@@ -8,6 +8,8 @@
     <script src="script.js" defer></script>
 </head>
 <body>
+    <audio id="musica" src="sons/Todo O Amor Que Houver Nessa Vida (Ao Vivo _ Reload)(MP3_160K).mp3"></audio>
+
     <!-- Overlay de loading -->
     <div class="loading-overlay">
         <div class="loading-heart">❤️</div>
@@ -128,5 +130,21 @@
             <p>Te amo meu Vitor🐺</p>
         </footer>
     </div>
+
+    <script>
+function iniciarMusicaAutomaticamente() {
+    const audio = document.getElementById("musica");
+
+    // tenta autoplay
+    audio.play().catch(() => {
+        // se bloquear, destrava no primeiro clique
+        document.addEventListener("click", () => {
+            audio.play();
+        }, { once: true });
+    });
+}
+
+window.addEventListener("load", iniciarMusicaAutomaticamente);
+</script>
 </body>
 </html>

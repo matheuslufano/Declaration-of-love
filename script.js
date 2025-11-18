@@ -17,6 +17,8 @@ document.addEventListener('mousemove', (e) => {
     }
 });
 
+
+
 function glitter() {
     const g = document.createElement('div');
     g.style.cssText = `
