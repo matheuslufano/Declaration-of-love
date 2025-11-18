@@ -17,6 +17,29 @@ document.addEventListener('mousemove', (e) => {
     }
 });
 
+function glitter() {
+    const g = document.createElement('div');
+    g.style.cssText = `
+        position: fixed;
+        left: ${Math.random() * 100}%;
+        top: ${Math.random() * 100}%;
+        width: 6px;
+        height: 6px;
+        background: white;
+        opacity: 0.8;
+        border-radius: 50%;
+        pointer-events: none;
+        box-shadow: 0 0 10px white;
+        animation: glitter 1s linear;
+        z-index: 9999;
+    `;
+    document.body.appendChild(g);
+    setTimeout(() => g.remove(), 1000);
+}
+
+setInterval(glitter, 150);
+
+
 // Partículas vermelhas
 function createParticle() {
     const particle = document.createElement('div');
@@ -76,19 +99,31 @@ function showSurprise() {
 function createTeAmoAnimation() {
     // Criar múltiplas animações "TE AMO"
     const teAmoTexts = [
+        '🏳️‍🌈 TE AMO DO JEITO QUE VOCÊ É 🏳️‍🌈',
+        '🌈 VOCÊ É MEU ARCO-ÍRIS 🌈',
+        'Você é o meu Cachorrão🐺',
         'TE AMO ❤️',
         '💖 TE AMO MUITO 💖',
         'EU TE AMO!',
         '❤️ MEU AMOR ❤️',
         'TE AMO PARA SEMPRE!',
-        '💕 VOCÊ É TUDO 💕',
+        '🐺 VOCÊ É TUDO 🐺',
         'MEU CORAÇÃO É SEU!',
-        '🥰 TE AMO DEMAIS 🥰'
+        '🥰 TE AMO DEMAIS 🥰',
+        '💘 AMOR DA MINHA VIDA 💘',
+        '🌟 VOCÊ É MINHA ESTRELA 🌟',
+        'Amor o seu 💛',
+        'Você é meu dono 🐺',
+        '🏳️‍🌈',
+        '😈',
+        '🌈',
+        '🐺💛🐺',
+        '❤️🧡💛💚🩵💜'
     ];
     
     // Animação central principal
     const mainTeAmo = document.createElement('div');
-    mainTeAmo.innerHTML = 'TE AMO ❤️';
+    mainTeAmo.innerHTML = 'TE AMO 🐺';
     mainTeAmo.style.cssText = `
         position: fixed;
         top: 50%;
@@ -96,7 +131,7 @@ function createTeAmoAnimation() {
         transform: translate(-50%, -50%);
         font-size: 4rem;
         font-weight: bold;
-        background: linear-gradient(45deg, #ff0040, #ffd700, #ff0040);
+        background: linear-gradient(45deg,#ff0000, #ff7f00, #ffff00,#00ff00, #0000ff, #4b0082, #9400d3);
         background-size: 200% 200%;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -178,7 +213,7 @@ function createTeAmoAnimation() {
 
 // Explosão de corações vermelhos
 function createHeartExplosion() {
-    const hearts = ['❤️', '💖', '💕', '💗', '💓', '💝', '♥️', '💘'];
+    const hearts = ['❤️', '💖', '💕', '💗', '💓', '💝', '♥️', '💘', '💛', '🏳️‍🌈', '🐺','😈','🩲','🦦'];
     
     for (let i = 0; i < 30; i++) {
         setTimeout(() => {
@@ -195,85 +230,36 @@ function createHeartExplosion() {
     }
 }
 
-// Easter egg: triplo clique
-let clickCount = 0;
-let clickTimer;
 
-document.addEventListener('click', (e) => {
-    clickCount++;
-    clearTimeout(clickTimer);
-    
-    if (clickCount === 3) {
-        // Ativação do modo ultra dark
-        document.body.style.filter = 'hue-rotate(30deg) saturate(1.8) brightness(1.2)';
-        createHeartExplosion();
-        
-        // Criar texto flutuante
-        const text = document.createElement('div');
-        text.innerHTML = '🔥 MODO DARK ULTRA ATIVADO! 🔥';
-        text.style.cssText = `
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 3rem;
-            font-weight: bold;
-            background: linear-gradient(45deg, #ff0040, #ffd700);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            z-index: 9999;
-            pointer-events: none;
-            animation: ultra-text 3s ease-out forwards;
-            text-shadow: 0 0 20px rgba(255, 0, 64, 0.8);
-        `;
-        document.body.appendChild(text);
-        
-        setTimeout(() => {
-            text.remove();
-            document.body.style.filter = '';
-        }, 3000);
-        
-        clickCount = 0;
-    } else {
-        clickTimer = setTimeout(() => {
-            clickCount = 0;
-        }, 1000);
+
+// ===================== MODAL DE FOTOS =====================
+
+const modal = document.getElementById("photoModal");
+const modalImg = document.getElementById("modalImg");
+const caption = document.getElementById("modalCaption");
+const closeModal = document.querySelector(".close-modal");
+
+// ABRIR MODAL COM 1 CLIQUE
+document.querySelectorAll(".photo-frame img").forEach(img => {
+    img.onclick = () => {
+        modal.style.display = "block";
+        modalImg.src = img.src;
+        caption.textContent = img.alt || "";
+    };
+});
+
+// FECHAR NO X
+closeModal.onclick = () => {
+    modal.style.display = "none";
+};
+
+// FECHAR CLICANDO FORA
+modal.onclick = (event) => {
+    if (event.target === modal) {
+        modal.style.display = "none";
     }
-    
-    // Efeito de clique vermelho
-    const ripple = document.createElement('div');
-    ripple.style.cssText = `
-        position: fixed;
-        left: ${e.clientX - 25}px;
-        top: ${e.clientY - 25}px;
-        width: 50px;
-        height: 50px;
-        border: 2px solid #ff0040;
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: 9999;
-        animation: ripple-effect 0.8s ease-out forwards;
-        box-shadow: 0 0 20px rgba(255, 0, 64, 0.6);
-    `;
-    document.body.appendChild(ripple);
-    setTimeout(() => ripple.remove(), 800);
-});
+};
 
-// Efeito parallax 3D no mouse
-document.addEventListener('mousemove', (e) => {
-    const cards = document.querySelectorAll('.love-card, .photo-frame');
-    const mouseX = e.clientX / window.innerWidth;
-    const mouseY = e.clientY / window.innerHeight;
-    
-    cards.forEach((card, index) => {
-        const speed = (index + 1) * 0.02;
-        const x = (mouseX - 0.5) * 15 * speed;
-        const y = (mouseY - 0.5) * 15 * speed;
-        
-        card.style.transform += ` translate3d(${x}px, ${y}px, 0)`;
-    });
-});
 
 // Efeito de scroll suave
 window.addEventListener('scroll', () => {
@@ -292,14 +278,14 @@ window.addEventListener('scroll', () => {
 
 // Sistema de notificações românticas dark
 const romanticMessages = [
-    "💖 Você é meu mundo inteiro!",
-    "🌹 Cada dia com você é especial!",
-    "💎 Você é meu tesouro mais precioso!",
-    "✨ Meu coração bate só por você!",
-    "🥰 Te amo mais a cada segundo!",
+    "🌍 Você é meu mundo inteiro!",
+    "💦 Cada dia com você é especial!",
+    "🐺 Você é meu tesouro mais precioso!",
+    "💛 Meu coração bate só por você!",
+    "🐺 Te amo mais a cada segundo!",
     "💕 Você é minha felicidade!",
-    "🌟 Minha estrela mais brilhante!",
-    "💘 Amor da minha vida toda!"
+    "🛐 Você é o meu Deus!",
+    "😈 Você me tem nas mão!"
 ];
 
 function showNotification() {
